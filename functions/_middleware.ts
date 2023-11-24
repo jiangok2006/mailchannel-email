@@ -1,11 +1,15 @@
-import mailChannelsPlugin from "@cloudflare/pages-plugin-mailchannels";
+import mailChannelsPlugin, { Submission } from "@cloudflare/pages-plugin-mailchannels";
 
 export const onRequest: PagesFunction = mailChannelsPlugin({
-    personalizations: [
+    personalizations: (sub: Submission) => [
         {
-            to: [{ name: "ACME Support", email: "support@example.com" }],
-        },
-    ],
+            to: [
+                {
+                    name: 'there',
+                    email: sub.formData.get("email")?.toString()!,
+                }
+            ]
+        }],
     from: {
         name: "ACME Support",
         email: "support@example.com",
